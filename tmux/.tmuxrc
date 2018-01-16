@@ -1,0 +1,12 @@
+# shell
+set -g default-command /usr/bin/zsh
+set -g default-shell /usr/bin/zsh
+
+# history
+set -g history-limit 8192
+
+# allow selections
+set -g mouse on
+
+# allow terminal scrolling
+set-option -g terminal-overrides 'xterm*:smcup@:rmcup@'

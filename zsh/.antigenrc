@@ -1,0 +1,16 @@
+# Load oh-my-zsh library
+antigen use oh-my-zsh
+
+# bundles
+antigen bundle command-not-found
+antigen bundle git
+antigen bundle tmux
+antigen bundle systemd
+antigen bundle pj
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+
+# theme
+antigen theme s1kx/zsh-themes synical 
+
+antigen apply
