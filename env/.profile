@@ -25,3 +25,7 @@ export PATH="${GEM_HOME}/bin:${PATH}"
 export GOROOT="/usr/lib/go"
 export GOPATH="$HOME/code/go"
 export GO15VENDOREXPERIMENT=1
+
+# Use seahorse for entering SSH passphrases.
+[ ! -z "$DISPLAY" ] && export SSH_ASKPASS="/usr/lib/seahorse/seahorse-ssh-askpass"
+
