@@ -23,13 +23,13 @@ set cursorline
 "set cursorcolumn
 
 " show invisibles
-set list
-set listchars=
-set listchars+=tab:𐄙\
-set listchars+=trail:·
-set listchars+=extends:»
-set listchars+=precedes:«
-set listchars+=nbsp:⣿
+"set list
+"set listchars=
+"set listchars+=tab:𐄙\
+"set listchars+=trail:·
+"set listchars+=extends:»
+"set listchars+=precedes:«
+"set listchars+=nbsp:⣿
 
 " split style
 set fillchars=vert:▒
