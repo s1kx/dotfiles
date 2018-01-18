@@ -18,5 +18,5 @@ Suggested packages for maximum fun and profit:
 
 * Install [stow](https://www.gnu.org/software/stow ) (e.g. `pacman -S stow` on ArchLinux).
 * Clone this repository to e.g. ~/dotfiles
-* Run `install.sh` to install all packages or `install.sh [pkg1] [pkg2] ...` to selectively install packages
+* Run `install` to install all packages or `install [pkg1] [pkg2] ...` to selectively install packages
 

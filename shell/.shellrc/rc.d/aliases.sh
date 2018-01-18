@@ -1,5 +1,3 @@
-# commands and aliases
-
 # mkdircd - make directory and switch to it
 mkdircd() {
 	mkdir "$@" && cd "${@: -1}"
@@ -18,9 +16,6 @@ alias move='rsync -Pa --remove-source-files'
 # sortdu - list and sort files by size (also consider ncdu)
 alias sortdu='du -hs * | sort -hr'
 
-# dotfiles
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
 ## filesystem aliases
 SYSTEMFS="sysfs,cgroup,cgroup2,proc,devtmpfs,devpts,pstore,debugfs,hugetlbfs,mqueue,configfs,efivarfs"
 VIRTUALFS="overlay,tmpfs,fuse,fusectl"
@@ -35,3 +30,6 @@ alias mnttree="findmnt -t no${SYSTEMFS} -U"
 alias mntusertree="findmnt -t ${USERFS} -U"
 alias mntdf="findmnt -t ${USERFS} -o TARGET,SOURCE,FSTYPE,SIZE,USED,AVAIL,USE%"
 alias mntfstab="findmnt --fstab -o SOURCE,TARGET,FSTYPE,OPTIONS"
+
+# Include custom aliases
+[[ -f ~/.aliases.local ]] && source ~/.aliases.local

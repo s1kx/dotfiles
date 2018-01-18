@@ -3,7 +3,7 @@
 if [ $# -eq 0 ]; then
   PKG=(
     "env"
-    "zsh"
+    "shell"
     "vim"
     "tmux"
   )
@@ -11,4 +11,5 @@ else
   PKG="$@"
 fi
 
-stow ${PKG[@]}
+exec stow ${PKG[@]}
+
