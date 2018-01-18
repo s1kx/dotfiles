@@ -1,5 +1,5 @@
 # Load all files from .shell/rc.d directory
-if [ -d $HOME/.shellrc/rc.d ]; then
+if [[ -d $HOME/.shellrc/rc.d ]]; then
   for file in $HOME/.shellrc/rc.d/*.sh; do
     source $file
   done
@@ -15,4 +15,6 @@ path=(
 )
 
 # Load local profile
-[[ -f ~/.zprofile.local ]] && source ~/.zprofile.local
+if [[ -f ~/.zprofile.local ]]; then
+	source ~/.zprofile.local
+fi
