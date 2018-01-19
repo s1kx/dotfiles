@@ -1,3 +1,6 @@
+# Hide user from prompt
+export DEFAULT_USER=`whoami`
+
 # Load Antigen
 ANTIGEN_SRC="/usr/share/zsh/share/antigen.zsh"
 if [ -f "$ANTIGEN_SRC" ]; then

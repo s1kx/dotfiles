@@ -1,3 +1,6 @@
+# Don't show user@host if local
+export DEFAULT_USER=`whoami`
+
 # Load all files from .shell/rc.d directory
 if [[ -d $HOME/.shellrc/rc.d ]]; then
   for file in $HOME/.shellrc/rc.d/*.sh; do

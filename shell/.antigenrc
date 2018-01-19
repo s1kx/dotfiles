@@ -9,6 +9,7 @@ antigen bundle systemd
 antigen bundle pj
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle z
 
 # theme
 antigen theme s1kx/zsh-themes synical 
