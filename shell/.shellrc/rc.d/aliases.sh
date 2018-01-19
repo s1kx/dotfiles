@@ -6,6 +6,11 @@ mkdircd() {
 # carry over aliases to root
 alias sudo='sudo '
 
+# shortcuts
+github() {
+	$BROWSER --new-window "https://github.com/$1"
+}
+
 # loadnvm - reduce shell startup time by only loading nvm when necessary
 alias loadnvm=". /usr/share/nvm/init-nvm.sh"
 # lesshigh - less with synax highlighting
