@@ -1,14 +1,63 @@
 #!/bin/bash
+set -e
 
-if [ $# -eq 0 ]; then
-  PKG=(
-    "shell"
-    "vim"
-    "tmux"
-  )
+declare -ar DEFAULT_PKG=(
+  "shell/common"
+  "shell/bash"
+  "shell/zsh"
+  "pkg/vim"
+  "pkg/tmux"
+)
+
+declare -a PACKAGES=()
+declare -a FLAGS=()
+target="${HOME}"
+
+while getopts 'nDvt:v' flag; do
+  case "${flag}" in
+    n|D|v)
+      FLAGS+=("-${flag}")
+      ;;
+    t)
+      target="${OPTARG}"
+      if [ ! -d "$target" ]; then
+        echo "Target directory '$target' does not exist"
+        exit 1
+      fi
+      ;;
+    *)
+      echo "Usage: $0 [-d] [-t TARGET] [PKG...]"
+      exit 1 ;;
+  esac
+done
+shift $((OPTIND-1))
+
+if [ $# -gt 0 ]; then
+  PACKAGES=( "$@" )
 else
-  PKG="$@"
+  PACKAGES=( "${DEFAULT_PKG[@]}" )
 fi
 
-exec stow ${PKG[@]}
+# Check for dependencies
+deps=( "stow" "zsh" "tmux" )
+mising=()
+for dep in "${deps[@]}"; do
+  if ! type "$dep" >&/dev/null; then
+    missing+=("$dep")
+  fi
+done
 
+if [ ${#missing[@]} -gt 0 ]; then
+  echo "ERROR: Missing dependencies: ${missing[@]}"
+  exit 2
+fi
+
+for pkg in "${PACKAGES[@]}"; do
+  if [ ! -d "$pkg" ]; then
+    echo "ERROR: Package '$pkg' does not exist"
+    exit 2
+  fi
+  IFS='/' read -ra p <<< "$pkg"
+  echo stow ${FLAGS[@]} -R -t "${target}" -d "${p[0]}" "${p[1]}"
+  stow ${FLAGS[@]} -R -t "${target}" -d "${p[0]}" "${p[1]}"
+done

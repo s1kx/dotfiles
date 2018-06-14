@@ -1,15 +1,16 @@
-# mkdircd - make directory and switch to it
-mkdircd() {
-	mkdir "$@" && cd "${@: -1}"
-}
+# check if command exists
+command_exists () {	type "$1" >&/dev/null }
+
+mkdircd () { mkdir "$@" && cd "${@: -1}" }
+
+cel2far() { echo "2 k 9 5 / $1 * 32 + p" | dc }
+far2cel() { echo "2 k $1 32 - 5 * 9 / p" | dc }
+
+aur() { $BROWSER --new-window "http://aur.archlinux.org/packages/$1" }
+github () { $BROWSER --new-window "https://github.com/$1" }
 
 # carry over aliases to root
 alias sudo='sudo '
-
-# shortcuts
-github() {
-	$BROWSER --new-window "https://github.com/$1"
-}
 
 # loadnvm - reduce shell startup time by only loading nvm when necessary
 alias loadnvm=". /usr/share/nvm/init-nvm.sh"
@@ -36,5 +37,10 @@ alias mntusertree="findmnt -t ${USERFS} -U"
 alias mntdf="findmnt -t ${USERFS} -o TARGET,SOURCE,FSTYPE,SIZE,USED,AVAIL,USE%"
 alias mntfstab="findmnt --fstab -o SOURCE,TARGET,FSTYPE,OPTIONS"
 
+# antivirus aliasese
+alias checkrootkits="sudo rkhunter --update; sudo rkhunter --propupd; sudo rkhunter --check"
+alias checkvirus="clamscan --recursive=yes --infected /home"
+alias updateantivirus="sudo freshclam"
+
 # Include custom aliases
-[[ -f ~/.aliases.local ]] && source ~/.aliases.local
+[[ -f ~/local/.aliasrc ]] && source ~/.local/.aliasrc
