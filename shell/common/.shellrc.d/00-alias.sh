@@ -1,5 +1,5 @@
 # check if command exists
-command_exists () {	type "$1" >&/dev/null }
+command_exists () {	type "$1" >&/dev/null 2>&1 }
 
 mkdircd () { mkdir "$@" && cd "${@: -1}" }
 
@@ -13,7 +13,7 @@ github () { $BROWSER --new-window "https://github.com/$1" }
 alias sudo='sudo '
 
 # loadnvm - reduce shell startup time by only loading nvm when necessary
-alias loadnvm=". /usr/share/nvm/init-nvm.sh"
+alias loadnvm='. /usr/share/nvm/init-nvm.sh'
 # lesshigh - less with synax highlighting
 alias lesshigh='LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s" less -M '
 
@@ -43,4 +43,4 @@ alias checkvirus="clamscan --recursive=yes --infected /home"
 alias updateantivirus="sudo freshclam"
 
 # Include custom aliases
-[[ -f ~/local/.aliasrc ]] && source ~/.local/.aliasrc
+[[ -f ~/.local/.aliasrc ]] && . ~/.local/.aliasrc

@@ -19,4 +19,8 @@ Suggested packages for maximum fun and profit:
 * Install [stow](https://www.gnu.org/software/stow ) (e.g. `pacman -S stow` on ArchLinux).
 * Clone this repository to e.g. ~/dotfiles
 * Run `install` to install all packages or `install [pkg1] [pkg2] ...` to selectively install packages
-
+* Create custom files as needed in the following locations:
+  * `~/.local/.aliasrc`
+  * `~/.local/.zprofile`
+  * `~/.local/.zshenv` - Set `PROJECT_PATHS` to your workspace folders for `pj`
+  * `~/.local/.zshrc`

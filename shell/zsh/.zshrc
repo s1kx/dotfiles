@@ -5,7 +5,7 @@
 autoload -U zmv
 
 # Load profile
-source ~/.zprofile
+. ~/.zprofile
 
 # Load all files from .shell/zshrc.d directory
 if [[ -d ~/.zshrc.d/ ]]; then
