@@ -10,7 +10,7 @@ set synmaxcol=512
 filetype plugin on
 
 " show line numbers
-set number
+"set number
 
 " no folding
 set nofoldenable

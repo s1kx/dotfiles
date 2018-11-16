@@ -1,17 +1,17 @@
-#!/bin/bash
-set -e
+#!/bin/zsh
 
-declare -ar DEFAULT_PKG=(
+typeset -gar PACKAGES=(
   "shell/common"
   "shell/bash"
   "shell/zsh"
   "pkg/vim"
   "pkg/tmux"
+  "scripts"
 )
 
-declare -a PACKAGES=()
-declare -a FLAGS=()
-target="${HOME}"
+typeset -ga USER_PACKAGES=( "${PACKAGES[@]}" )
+typeset -ga FLAGS=()
+typeset -g TARGET="${HOME}"
 
 while getopts 'nDvt:v' flag; do
   case "${flag}" in
@@ -19,24 +19,40 @@ while getopts 'nDvt:v' flag; do
       FLAGS+=("-${flag}")
       ;;
     t)
-      target="${OPTARG}"
-      if [ ! -d "$target" ]; then
-        echo "Target directory '$target' does not exist"
+      TARGET="${OPTARG}"
+      if [ ! -d "$TARGET" ]; then
+        echo "Target directory '$TARGET' does not exist"
         exit 1
       fi
       ;;
     *)
-      echo "Usage: $0 [-d] [-t TARGET] [PKG...]"
+      echo "Usage: $0 [-n] [-d] [-v] [-t TARGET] [PKG...]"
       exit 1 ;;
   esac
 done
 shift $((OPTIND-1))
 
+# Override packages by user arguments
 if [ $# -gt 0 ]; then
-  PACKAGES=( "$@" )
-else
-  PACKAGES=( "${DEFAULT_PKG[@]}" )
+  USER_PACKAGES=( "$@" )
 fi
+
+_install_pkg () {
+  [[ $# -eq 0 ]] && return 1
+
+  local _root="$(dirname "$1")"
+  local _pkg="$(basename "$1")"
+
+  typeset -a _params=(
+    "${FLAGS[@]}"
+    "-R"
+    "-t ${TARGET}"
+    "-d ${_root}"
+    "${_pkg}"
+  )
+  echo "$ stow ${_params[@]}"
+  stow ${_params[@]}
+}
 
 # Check for dependencies
 deps=( "stow" "zsh" "tmux" )
@@ -57,7 +73,6 @@ for pkg in "${PACKAGES[@]}"; do
     echo "ERROR: Package '$pkg' does not exist"
     exit 2
   fi
-  IFS='/' read -ra p <<< "$pkg"
-  echo stow ${FLAGS[@]} -R -t "${target}" -d "${p[0]}" "${p[1]}"
-  stow ${FLAGS[@]} -R -t "${target}" -d "${p[0]}" "${p[1]}"
+  echo "Installing ${pkg}..."
+  _install_pkg "${pkg}"
 done

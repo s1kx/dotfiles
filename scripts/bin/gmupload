@@ -1,0 +1,45 @@
+#!/bin/zsh
+set -e
+
+. ~/.aliasrc
+
+type gmupload
+
+typeset -gr PROG=gmupload
+typeset -gr GMUPLOAD_BIN=/usr/bin/${PROG}
+if [ ! -x "$GMUPLOAD_BIN" ]; then
+  >&2 echo "ERROR: ${PROG} is not installed"
+  exit 1
+fi
+
+typeset -g GMUPLOAD_CMD="$GMUPLOAD_BIN"
+#command_exists "novpn" && GMUPLOAD_CMD="novpn ${GMUPLOAD_CMD}"
+typeset -r GMUPLOAD_CMD
+
+typeset -gU GMUSIC_FLAGS=()
+
+# Settings
+[[ -f /etc/conf.d/google-music ]] && . /etc/conf.d/google-music
+
+GMUSIC_FLAGS+=("-l")
+[[ -v GMUSIC_MAC && "$GMUSIC_MAC" != "" ]] && GMUSIC_FLAGS+=("-U '$GMUSIC_MAC'")
+
+# If GMUSIC_ACCOUNTS is not defined, use all unique creds from ~/.local/gmusicapi
+typeset -gaU GMUSIC_ACCOUNTS
+if [ ${#GMUSIC_ACCOUNTS} -eq 0 ]; then
+  for credpath in ~/.local/share/gmusicapi/*.cred; do
+    local _filename="$(basename "$credpath")"
+    local _account="${_filename%.cred}"
+    GMUSIC_ACCOUNTS+=("$_account")
+  done
+  unset credpath
+fi
+
+_upload () {
+  echo $GMUPLOAD_CMD "${GMUSIC_FLAGS[@]}" $@
+  eval "$GMUPLOAD_CMD "${GMUSIC_FLAGS[@]}" $@"
+}
+
+for acc in "${GMUSIC_ACCOUNTS[@]}"; do
+  _upload -c "$acc" $*
+done

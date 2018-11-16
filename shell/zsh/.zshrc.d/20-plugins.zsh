@@ -13,8 +13,6 @@
 #
 # declare -a CODE_WORKSPACES=(
 #   "github.com"
-#   "github.com/s1kx"
-#   "github.com/synix"
 #   "bitbucket.org"
 # )
 # export CODE_WORKSPACES

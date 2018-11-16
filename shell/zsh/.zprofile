@@ -11,4 +11,4 @@ fi
 
 # Set PATH
 typeset -U path
-[[ -d ~/bin ]] && path=( "~/bin" "$path[@]" )
+[[ -d "${HOME}/bin" ]] && path=( "${HOME}/bin" "$path[@]" )
